@@ -11,7 +11,7 @@ class Helper_list:
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
 
-    roles = ["On-Duty"]
+    roles = ["Helper On Duty"]
 
     @commands.has_permissions(administrator=True)
     @commands.command(pass_context=True)
@@ -27,7 +27,7 @@ class Helper_list:
         with open("helpers.json", "w") as f:
             json.dump(helpers, f)
         # replace roles, so to not leave previous ones on by accident
-        if position == "On-Duty":  # this role requires the use of sudo
+        if position == "Helper On Duty":  # this role requires the use of sudo
             await self.bot.add_roles(member, self.bot.helpers_role)
         else:
             await self.bot.add_roles(member, self.bot.helpers_role, discord.utils.get(self.bot.server.roles, name=position))
@@ -58,7 +58,7 @@ class Helper_list:
         if author.id not in helpers:
             await self.bot.say("You are not listed as a helper, and can't use this.")
             return
-        if helpers[author.id] != "On-Duty":
+        if helpers[author.id] != "Helper On Duty":
             await self.bot.say("You are not a helper, therefore this command is not required.")
             return
         await self.bot.add_roles(author, self.bot.onduty_role)
@@ -76,7 +76,7 @@ class Helper_list:
         if author.id not in helpers:
             await self.bot.say("You are not listed as a helper, and can't use this.")
             return
-        if helpers[author.id] != "On-Duty":
+        if helpers[author.id] != "Helper On Duty":
             await self.bot.say("You are not a helper, therefore this command is not required.")
             return
         await self.bot.remove_roles(author, self.bot.onduty_role)

@@ -85,7 +85,7 @@ async def on_ready():
         bot.messagelogs_channel = discord.utils.get(server.channels, name="server-logs")
         # roles
         bot.staff_role = discord.utils.get(server.roles, name="Staff")
-        bot.halfop_role = discord.utils.get(server.roles, name="Super Staff")
+        bot.halfop_role = discord.utils.get(server.roles, name="Super-Staff")
         bot.op_role = discord.utils.get(server.roles, name="Operations")
         bot.superop_role = discord.utils.get(server.roles, name="Administration")
         bot.helpers_role = discord.utils.get(server.roles, name="Helpers")
@@ -114,21 +114,21 @@ logger.addHandler(handler)
 # loads extensions
 addons = [
 #    'addons.assistance',
-#    'addons.blah',
+    'addons.blah',
 #    'addons.ctrerr',
-#    'addons.events',
-#    'addons.extras',
-#    'addons.kickban',
-#    'addons.load',
-#    'addons.lockdown',
-#    'addons.logs',
-#    'addons.loop',
+    'addons.events',
+    'addons.extras',
+    'addons.kickban',
+    'addons.load',
+    'addons.lockdown',
+    'addons.logs',
+    'addons.loop',
 #    'addons.memes',
-#    'addons.helper_list',
-#    'addons.mod_staff',
-#    'addons.mod_warn',
-#    'addons.mod_watch',
-#    'addons.mod',
+    'addons.helper_list',
+    'addons.mod_staff',
+    'addons.mod_warn',
+    'addons.mod_watch',
+    'addons.mod',
 #    'addons.ninerr',
 #    'addons.rules',
 ]

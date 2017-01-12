@@ -188,9 +188,9 @@ class Mod:
         except discord.errors.Forbidden:
             await self.bot.say("💢 I don't have permission to do this.")
 
-    @commands.command(pass_context=True, name="takehelp")
-    async def takehelp(self, ctx, user, reason=""):
-        """Remove access to help-and-questions. Staff and Helpers only."""
+    @commands.command(pass_context=True, name="sanction")
+    async def sanction(self, ctx, user, reason=""):
+        """Remove access to #critique and #development. Staff and Helpers only."""
         author = ctx.message.author
         if (self.bot.helpers_role not in author.roles) and (self.bot.staff_role not in author.roles):
             msg = "{} You cannot used this command.".format(author.mention)
@@ -198,29 +198,29 @@ class Mod:
             return
         try:
             member = ctx.message.mentions[0]
-            await self.add_restriction(member, "No-Help")
+            await self.add_restriction(member, "Sanctioned")
             await self.bot.add_roles(member, self.bot.nohelp_role)
-            msg_user = "You lost access to help channels!"
+            msg_user = "You lost permission to speak in the critique and development channels!"
             if reason != "":
                 msg_user += " The given reason is: " + reason
             try:
                 await self.bot.send_message(member, msg_user)
             except discord.errors.Forbidden:
                 pass  # don't fail in case user has DMs disabled for this server, or blocked the bot
-            await self.bot.say("{} can no longer access the help channels.".format(member.mention))
-            msg = "🚫 **Help access removed**: {} removed access to help channels from {} | {}#{}".format(ctx.message.author.mention, member.mention, member.name, member.discriminator)
+            await self.bot.say("{} can no longer post in the critique and development channels.".format(member.mention))
+            msg = "🚫 **User sanctioned from critique and dev**: {} removed privilege to post in critique and development channels from {} | {}#{}".format(ctx.message.author.mention, member.mention, member.name, member.discriminator)
             if reason != "":
                 msg += "\n✏️ __Reason__: " + reason
             else:
-                msg += "\nPlease add an explanation below. In the future, it is recommended to use `.takehelp <user> [reason]` as the reason is automatically sent to the user."
+                msg += "\nPlease add an explanation below. In the future, it is recommended to use `.sanction <user> [reason]` as the reason is automatically sent to the user."
             await self.bot.send_message(self.bot.modlogs_channel, msg)
             await self.bot.send_message(self.bot.helpers_channel, msg)
         except discord.errors.Forbidden:
             await self.bot.say("💢 I don't have permission to do this.")
 
-    @commands.command(pass_context=True, name="givehelp")
-    async def givehelp(self, ctx, user):
-        """Restore access to help-and-questions. Staff and Helpers only."""
+    @commands.command(pass_context=True, name="unsanction")
+    async def unsanction(self, ctx, user):
+        """Restore permission to post in critique and dev channels to sanctioned users. Staff and Helpers only."""
         author = ctx.message.author
         if (self.bot.helpers_role not in author.roles) and (self.bot.staff_role not in author.roles):
             msg = "{} You cannot used this command.".format(author.mention)
@@ -228,10 +228,10 @@ class Mod:
             return
         try:
             member = ctx.message.mentions[0]
-            await self.remove_restriction(member, "No-Help")
+            await self.remove_restriction(member, "Sanctioned")
             await self.bot.remove_roles(member, self.bot.nohelp_role)
-            await self.bot.say("{} can access the help channels again.".format(member.mention))
-            msg = "⭕️ **Help access restored**: {} restored access to help channels to {} | {}#{}".format(ctx.message.author.mention, member.mention, member.name, member.discriminator)
+            await self.bot.say("{} can post in the critique and development channels again.".format(member.mention))
+            msg = "⭕️ **User sanctions removed**: {} restored privilege to post in critique and development channels to {} | {}#{}".format(ctx.message.author.mention, member.mention, member.name, member.discriminator)
             await self.bot.send_message(self.bot.modlogs_channel, msg)
             await self.bot.send_message(self.bot.helpers_channel, msg)
         except discord.errors.Forbidden:

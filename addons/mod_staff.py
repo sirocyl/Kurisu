@@ -11,7 +11,7 @@ class ModStaff:
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
 
-    roles = ["HalfOP", "OP", "SuperOP", "Owner"]
+    roles = ["Super-Staff", "Operations", "Administration", "Owner"]
 
     @commands.has_permissions(administrator=True)
     @commands.command(pass_context=True)
@@ -27,7 +27,7 @@ class ModStaff:
         with open("staff.json", "w") as f:
             json.dump(staff, f)
         # replace roles, so to not leave previous ones on by accident
-        if position == "HalfOP":  # this role requires the use of sudo
+        if position == "Super-Staff":  # this role requires the use of sudo
             await self.bot.replace_roles(member, self.bot.staff_role)
         else:
             await self.bot.replace_roles(member, self.bot.staff_role, discord.utils.get(self.bot.server.roles, name=position))
@@ -50,33 +50,33 @@ class ModStaff:
     @commands.has_permissions(manage_nicknames=True)
     @commands.command(pass_context=True)
     async def sudo(self, ctx):
-        """Gain staff powers temporarily. Only needed by HalfOPs."""
+        """Gain staff powers temporarily. Only needed by Staff."""
         author = ctx.message.author
         with open("staff.json", "r") as f:
             staff = json.load(f)
         if author.id not in staff:
             await self.bot.say("You are not listed as staff, and can't use this. (this message should not appear)")
             return
-        if staff[author.id] != "HalfOP":
-            await self.bot.say("You are not HalfOP, therefore this command is not required.")
+        if staff[author.id] != "Staff":
+            await self.bot.say("You are above Staff, therefore this command is not required.")
             return
         await self.bot.add_roles(author, self.bot.halfop_role)
-        await self.bot.say("{} is now using sudo. Welcome to the twilight zone!".format(author.mention))
+        await self.bot.say("{} is now using sudo. Welcome to the fantasy zone! GET READY.".format(author.mention))
         msg = "👮 **Sudo**: {} | {}#{}".format(author.mention, author.name, author.discriminator)
         await self.bot.send_message(self.bot.modlogs_channel, msg)
 
     @commands.has_permissions(manage_nicknames=True)
     @commands.command(pass_context=True)
     async def unsudo(self, ctx):
-        """Remove temporary staff powers. Only needed by HalfOPs."""
+        """Remove temporary staff powers. Only needed by Staff."""
         author = ctx.message.author
         with open("staff.json", "r") as f:
             staff = json.load(f)
         if author.id not in staff:
             await self.bot.say("You are not listed as staff, and can't use this. (this message should not appear)")
             return
-        if staff[author.id] != "HalfOP":
-            await self.bot.say("You are not HalfOP, therefore this command is not required.")
+        if staff[author.id] != "Staff":
+            await self.bot.say("You are above Staff, therefore this command is not required.")
             return
         await self.bot.remove_roles(author, self.bot.halfop_role)
         await self.bot.say("{} is no longer using sudo!".format(author.mention))

@@ -12,13 +12,13 @@ class Extras:
         print('Addon "{}" loaded'.format(self.__class__.__name__))
 
     @commands.command()
-    async def kurisu(self):
-        """About Kurisu"""
-        embed = discord.Embed(title="Kurisu", color=discord.Color.green())
-        embed.set_author(name="916253 and ihaveahax")
-        embed.set_thumbnail(url="http://static.zerochan.net/Makise.Kurisu.full.1998946.jpg")
-        embed.url = "https://github.com/916253/Kurisu"
-        embed.description = "Kurisu, the 3DS Hacking Discord bot!"
+    async def yumetaro(self):
+        """About Yumetarō"""
+        embed = discord.Embed(title="Yumetarō", color=discord.Color.green())
+        embed.set_author(name="sirocyl, 916253 and ihaveahax")
+        embed.set_thumbnail(url="https://camo.githubusercontent.com/3c8ef77bde87bc31a8d40344ccfac44a47b585b5/687474703a2f2f692e696d6775722e636f6d2f627141314d59722e706e67")
+        embed.url = "https://github.com/sirocyl/Yumetaro"
+        embed.description = "Yumetarō, our little gimmick!"
         await self.bot.say("", embed=embed)
 
     @commands.command()

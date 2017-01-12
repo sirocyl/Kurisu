@@ -31,8 +31,8 @@ class Loop:
             try:
                 print("loop")
                 timestamp = datetime.datetime.now()
-                if timestamp.minute == 0 and timestamp.hour != self.last_hour:
-                    await self.bot.send_message(self.bot.helpers_channel, "{} has {} members at this hour!".format(self.bot.server.name, self.bot.server.member_count))
+                if timestamp.minute == 0 and timestamp.hour == 12 and timestamp.hour != self.last_hour:
+                    await self.bot.send_message(self.bot.helpers_channel, "Good morning! Daily report: {} has {} members!".format(self.bot.server.name, self.bot.server.member_count))
                     self.last_hour = timestamp.hour
                 #for user_id, times in self.bot.timedbans.items():
                 #    pass

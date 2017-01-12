@@ -19,7 +19,7 @@ class KickBan:
             msg = "You were kicked from {0}.".format(self.bot.server.name)
             if reason != "":
                 msg += " The given reason is: " + reason
-            msg += "\n\nYou are able to rejoin the server, but please read the rules in #welcome-and-rules before participating again."
+            msg += "\n\nYou are able to rejoin the server, but please read the rules in #welcome before participating again."
             try:
                 await self.bot.send_message(member, msg)
             except discord.errors.Forbidden:
@@ -38,7 +38,7 @@ class KickBan:
     @commands.has_permissions(ban_members=True)
     @commands.command(pass_context=True, name="ban")
     async def ban_member(self, ctx, user, *, reason=""):
-        """Bans a user from the server. OP+ only."""
+        """Bans a user from the server. Operations and up only."""
         try:
             member = ctx.message.mentions[0]
             msg = "You were banned from {0}.".format(self.bot.server.name)
@@ -63,7 +63,7 @@ class KickBan:
     @commands.has_permissions(ban_members=True)
     @commands.command(pass_context=True, name="silentban", hidden=True)
     async def silentban_member(self, ctx, user, *, reason=""):
-        """Bans a user from the server, without a notification. OP+ only."""
+        """Bans a user from the server, without a notification. Operations and up only."""
         try:
             member = ctx.message.mentions[0]
             self.bot.actions.append("ub:"+member.id)

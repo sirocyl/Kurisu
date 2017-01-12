@@ -13,46 +13,8 @@ class Events:
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
 
-    piracy_tools = [
-        'freeshop',
-        'free shop',
-        'fr3eshop',
-        'fr33shop',
-        'fre3shop',
-        'ciangel',
-        'cia angel',
-        'tikdevil',
-        'tikshop',
-        'fr335h0p',
-        'fr€€shop',
-        'fr€€sh0p',
-        'fr3e sh0p',
-        'fr//shop',
-        'fr//sh0p',
-        'fre shop',
-        'free$hop',
-        'free $hop',
-        'fr$$hop',
-        'friishop',
-        'frii shop',
-        'fr££shop',
-        'fr££ shop',
-        'fr£€shop',
-        'fr£ shop',
-        'fr£eshop',
-        'fr£e shop',
-        'fre£shop',
-        'fre£ shop',
-        'fr€£shop',
-        'threeshop',
-        'thr33shop',
-        'thr33 shop',
-        'thr££ shop',
-        'thr££shop',
-        'thr£eshop',
-        'thr33 shop',
-        'thr£e shop',
-        'thr33shop',
+    forbidden_words = [
+        'deflemask',
         
     ]
 
@@ -63,53 +25,27 @@ class Events:
         embed.description = message.content
         if message.author.id in self.bot.watching:
             await self.bot.send_message(self.bot.messagelogs_channel, "**Watch log**: {} in {}".format(message.author.mention, message.channel.mention), embed=embed)
-        is_help_channel = message.channel.name[0:5] == "help-"
+        is_help_channel = message.channel.name == "critique"
         msg = ''.join(char for char in message.content.lower() if char in printable)
         contains_invite_link = "discordapp.com/invite" in msg or "discord.gg" in msg
-        # special check for a certain thing
-        contains_fs_repo_url = re.match('(.*)notabug\.org\/(.*)\/freeshop(.*)', msg, re.IGNORECASE)
-        contains_piracy_site_mention = any(x in msg for x in ('3dsiso', '3dschaos'))
-        contains_piracy_url_mention = any(x in msg for x in ('3ds.titlekeys', 'wiiu.titlekeys', 'titlekeys.com'))
-        contains_piracy_tool_mention = any(x in msg for x in self.piracy_tools)
-        contains_piracy_site_mention_indirect = any(x in msg for x in ('iso site', 'chaos site'))
+        contains_forbidden_word_mention = any(x in msg for x in self.forbidden_words)
         if contains_invite_link:
             await self.bot.send_message(self.bot.messagelogs_channel, "✉️ **Invite posted**: {} posted an invite link in {}\n------------------\n{}".format(message.author.mention, message.channel.mention, message.content))
-        if contains_fs_repo_url != None:
+        if contains_forbidden_word_mention:
             try:
                 await self.bot.delete_message(message)
             except discord.errors.NotFound:
                 pass
-            await self.bot.send_message(message.author, "Please read #welcome-and-rules. You cannot link to tools used for piracy, therefore your message was automatically deleted.", embed=embed)
-            await self.bot.send_message(self.bot.messagelogs_channel, "**Bad URL**: {} posted a freeShop Repo URL in {} (message deleted)".format(message.author.mention, message.channel.mention), embed=embed)
-        if contains_piracy_tool_mention:
-            try:
-                await self.bot.delete_message(message)
-            except discord.errors.NotFound:
-                pass
-            await self.bot.send_message(message.author, "Please read #welcome-and-rules. You cannot mention tools used for piracy, therefore your message was automatically deleted.", embed=embed)
-            await self.bot.send_message(self.bot.messagelogs_channel, "**Bad tool**: {} mentioned a piracy tool in {} (message deleted)".format(message.author.mention, message.channel.mention), embed=embed)
-        if contains_piracy_site_mention or contains_piracy_url_mention:
-            try:
-                await self.bot.delete_message(message)
-            except discord.errors.NotFound:
-                pass
-            await self.bot.send_message(message.author, "Please read #welcome-and-rules. You cannot mention sites used for piracy directly, therefore your message was automatically deleted.", embed=embed)
-            await self.bot.send_message(self.bot.messagelogs_channel, "**Bad site**: {} mentioned a piracy site directly in {} (message deleted)".format(message.author.mention, message.channel.mention), embed=embed)
-        elif contains_piracy_site_mention_indirect:
-            if is_help_channel:
-                try:
-                    await self.bot.delete_message(message)
-                except discord.errors.NotFound:
-                    pass
-                await self.bot.send_message(message.author, "Please read #welcome-and-rules. You cannot mention sites used for piracy in the help-and-questions channels directly or indirectly, therefore your message was automatically deleted.", embed=embed)
-            await self.bot.send_message(self.bot.messagelogs_channel, "**Bad site**: {} mentioned a piracy site indirectly in {}{}".format(message.author.mention, message.channel.mention, " (message deleted)" if is_help_channel else ""), embed=embed)
+            await self.bot.send_message(message.author, "Please read the rules in #welcome. You mentioned something you shouldn't have, therefore your message was automatically deleted.", embed=embed)
+            await self.bot.send_message(self.bot.messagelogs_channel, "**Forbidden word**: {} mentioned a forbidden word in {} (message deleted)".format(message.author.mention, message.channel.mention), embed=embed)
 
     async def on_message(self, message):
-        if message.author.name == "GitHub" and message.author.discriminator == "0000":
-            await self.bot.send_message(self.bot.helpers_channel, "Automatically pulling changes!")
-            call(['git', 'pull'])
-            await self.bot.close()
-            return
+# Automatically updates when github webhook posts changes to Yumetaro. This shall return sometime.
+#        if message.author.name == "GitHub" and message.author.discriminator == "0000":
+#            await self.bot.send_message(self.bot.helpers_channel, "Automatically pulling changes!")
+#            call(['git', 'pull'])
+#            await self.bot.close()
+#            return
         await self.bot.wait_until_ready()
         await self.scan_message(message)
 
