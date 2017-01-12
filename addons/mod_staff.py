@@ -57,7 +57,7 @@ class ModStaff:
         if author.id not in staff:
             await self.bot.say("You are not listed as staff, and can't use this. (this message should not appear)")
             return
-        if staff[author.id] != "Staff":
+        if staff[author.id] != "Super-Staff":
             await self.bot.say("You are above Staff, therefore this command is not required.")
             return
         await self.bot.add_roles(author, self.bot.halfop_role)
@@ -75,7 +75,7 @@ class ModStaff:
         if author.id not in staff:
             await self.bot.say("You are not listed as staff, and can't use this. (this message should not appear)")
             return
-        if staff[author.id] != "Staff":
+        if staff[author.id] != "Super-Staff":
             await self.bot.say("You are above Staff, therefore this command is not required.")
             return
         await self.bot.remove_roles(author, self.bot.halfop_role)
