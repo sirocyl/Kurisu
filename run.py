@@ -107,7 +107,7 @@ async def on_ready():
 # outputs errors to a log file, clears every run to save space
 logger = logging.getLogger('discord')
 logger.setLevel(logging.ERROR)
-handler = logging.FileHandler(filename='yume_output.log', encoding='utf-8', mode='w')
+handler = logging.FileHandler(filename='kurisu_output.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
