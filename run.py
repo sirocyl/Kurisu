@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
-# Kurisu by 916253 & ihaveamac
+# Yumetarō by sirocyl
+# based on Kurisu by 916253 & ihaveamac
 # license: Apache License 2.0
-# https://github.com/916253/Kurisu
+# https://github.com/sirocyl/Yumetaro
 
 description = """
-Kurisu, the bot for the 3DS Hacking Discord! Slowly replacing Saber as it is no longer actively developed.
+Yumetarō, the FamiTracker Community bot! They don't call him Mr. Gimmick for nothing.
 """
 
 # import dependencies
@@ -75,27 +76,27 @@ async def on_ready():
         print("{} has started! {} has {} members!".format(bot.user.name, server.name, server.member_count))
         bot.server = server
         # channels
-        bot.welcome_channel = discord.utils.get(server.channels, name="welcome-and-rules")
-        bot.announcements_channel = discord.utils.get(server.channels, name="announcements")
-        bot.helpers_channel = discord.utils.get(server.channels, name="helpers")
-        bot.mods_channel = discord.utils.get(server.channels, name="mods")
-        bot.modlogs_channel = discord.utils.get(server.channels, name="mod-logs")
+        bot.welcome_channel = discord.utils.get(server.channels, name="welcome")
+        bot.announcements_channel = discord.utils.get(server.channels, name="welcome")
+        bot.helpers_channel = discord.utils.get(server.channels, name="meta")
+        bot.mods_channel = discord.utils.get(server.channels, name="backroom")
+        bot.modlogs_channel = discord.utils.get(server.channels, name="server-logs")
         bot.serverlogs_channel = discord.utils.get(server.channels, name="server-logs")
-        bot.messagelogs_channel = discord.utils.get(server.channels, name="message-logs")
+        bot.messagelogs_channel = discord.utils.get(server.channels, name="server-logs")
         # roles
         bot.staff_role = discord.utils.get(server.roles, name="Staff")
-        bot.halfop_role = discord.utils.get(server.roles, name="HalfOP")
-        bot.op_role = discord.utils.get(server.roles, name="OP")
-        bot.superop_role = discord.utils.get(server.roles, name="SuperOP")
+        bot.halfop_role = discord.utils.get(server.roles, name="Super Staff")
+        bot.op_role = discord.utils.get(server.roles, name="Operations")
+        bot.superop_role = discord.utils.get(server.roles, name="Administration")
         bot.helpers_role = discord.utils.get(server.roles, name="Helpers")
-        bot.onduty_role = discord.utils.get(server.roles, name="On-Duty")
+        bot.onduty_role = discord.utils.get(server.roles, name="Helper On Duty")
         bot.probation_role = discord.utils.get(server.roles, name="Probation")
         bot.muted_role = discord.utils.get(server.roles, name="Muted")
-        bot.nomemes_role = discord.utils.get(server.roles, name="No-Memes")
-        bot.nohelp_role = discord.utils.get(server.roles, name="No-Help")
-        bot.noembed_role = discord.utils.get(server.roles, name="No-Embed")
+        bot.nomemes_role = discord.utils.get(server.roles, name="No Memes")
+        bot.nohelp_role = discord.utils.get(server.roles, name="Sanctioned")
+        bot.noembed_role = discord.utils.get(server.roles, name="No Embed")
         bot.everyone_role = discord.utils.get(server.roles, name="@everyone")
-        msg = "{} has started! {} has {} members!".format(bot.user.name, server.name, server.member_count)
+        msg = "{} is here! {} has {} members!".format(bot.user.name, server.name, server.member_count)
         if len(failed_addons) != 0:
             msg += "\n\nSome addons failed to load:\n"
             for f in failed_addons:
@@ -106,30 +107,30 @@ async def on_ready():
 # outputs errors to a log file, clears every run to save space
 logger = logging.getLogger('discord')
 logger.setLevel(logging.ERROR)
-handler = logging.FileHandler(filename='kurisu_output.log', encoding='utf-8', mode='w')
+handler = logging.FileHandler(filename='yume_output.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
 # loads extensions
 addons = [
-    'addons.assistance',
-    'addons.blah',
-    'addons.ctrerr',
-    'addons.events',
-    'addons.extras',
-    'addons.kickban',
-    'addons.load',
-    'addons.lockdown',
-    'addons.logs',
-    'addons.loop',
-    'addons.memes',
-    'addons.helper_list',
-    'addons.mod_staff',
-    'addons.mod_warn',
-    'addons.mod_watch',
-    'addons.mod',
-    'addons.ninerr',
-    'addons.rules',
+#    'addons.assistance',
+#    'addons.blah',
+#    'addons.ctrerr',
+#    'addons.events',
+#    'addons.extras',
+#    'addons.kickban',
+#    'addons.load',
+#    'addons.lockdown',
+#    'addons.logs',
+#    'addons.loop',
+#    'addons.memes',
+#    'addons.helper_list',
+#    'addons.mod_staff',
+#    'addons.mod_warn',
+#    'addons.mod_watch',
+#    'addons.mod',
+#    'addons.ninerr',
+#    'addons.rules',
 ]
 
 failed_addons = []
